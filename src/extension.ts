@@ -1,7 +1,7 @@
 import * as changeCase from 'change-case';
 import * as vscode from 'vscode';
 export function activate(context: vscode.ExtensionContext) {
-	const disposable = vscode.commands.registerCommand('xxc-transform-case.transform', () => {
+	const disposable = vscode.commands.registerCommand('transform-case.transform', () => {
 		const editor = vscode.window.activeTextEditor;
 		if (editor) {
 			const document = editor.document;

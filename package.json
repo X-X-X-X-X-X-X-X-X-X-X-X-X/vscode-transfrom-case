@@ -1,8 +1,10 @@
 {
-  "name": "xxc-transform-case",
+  "name": "transform-case",
   "displayName": "Transform Case",
   "description": "",
   "version": "0.0.1",
+  "publisher": "xxc",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.105.0"
   },
@@ -12,17 +14,21 @@
   "type": "module",
   "activationEvents": [],
   "main": "./out/extension.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/X-X-X-X-X-X-X-X-X-X-X-X-X/vscode-transfrom-case.git"
+  },
   "contributes": {
     "commands": [
       {
-        "command": "xxc-transform-case.transform",
+        "command": "transform-case.transform",
         "title": "Transform Case"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "xxc-transform-case.transform",
+          "command": "transform-case.transform",
           "group": "modification@1",
           "when": "editorHasSelection"
         }
