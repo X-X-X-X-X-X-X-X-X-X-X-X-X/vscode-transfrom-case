@@ -1,8 +1,8 @@
 {
   "name": "transform-case",
-  "displayName": "Transform Case",
+  "displayName": "Transform Case - XXC",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "xxc",
   "license": "MIT",
   "engines": {
@@ -29,7 +29,7 @@
       "editor/context": [
         {
           "command": "transform-case.transform",
-          "group": "modification@1",
+          "group": "1_modification",
           "when": "editorHasSelection"
         }
       ]
@@ -41,7 +41,8 @@
     "watch": "tsc -watch -p ./",
     "pretest": "pnpm run compile && pnpm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "package": "vsce package"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
