@@ -1,0 +1,1 @@
+import './translate-provider/providers/ali.ts';

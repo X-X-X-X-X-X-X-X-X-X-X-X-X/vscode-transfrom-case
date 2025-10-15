@@ -1,0 +1,66 @@
+import * as changeCase from 'change-case';
+import * as vscode from 'vscode';
+import { GetTranslateProvider } from '../translate-provider/provider';
+import "../auto-loaded-effects"
+
+export const transfromCase = async (translate?: boolean) => {
+    const editor = vscode.window.activeTextEditor;
+    if (editor) {
+        const document = editor.document;
+        const selections = editor.selections;
+        const previewSelection = selections[0];
+        const moreSelection = selections.length - 1;
+        if (!previewSelection.isEmpty) {
+            const quickPick = vscode.window.createQuickPick();
+            let text = document.getText(previewSelection)
+            let translator = GetTranslateProvider()
+            if (translate) {
+                text = await translator?.translate({
+                    sourceLanguage: '',
+                    targetLanguage: '',
+                    sourceText: text
+                })!
+            }
+            quickPick.items = Object.keys(changeCase).filter(k => k.endsWith("Case")).map(k => {
+                return {
+                    //@ts-ignore
+                    label: changeCase[k](text) + ` ← ${k}`,
+                    description: `${moreSelection > 0 ? `${moreSelection}+` : ""}`
+                } as vscode.QuickPickItem
+            })
+            quickPick.onDidAccept(async () => {
+                quickPick.dispose();
+                const acceptedItem = quickPick.selectedItems[0]
+                let method = acceptedItem.label?.split(" ").pop()
+                const replace: Map<vscode.Selection, string> = new Map();
+                if (selections.length === 1) {
+                    replace.set(selections[0], text)
+                } else {
+                    let idx = 0
+                    for (const s of selections) {
+                        idx++;
+                        if (idx === 0) continue;
+                        if (!s.isEmpty) {
+                            let text = document.getText(s)
+                            if (translate) {
+                                text = await await translator?.translate({
+                                    sourceLanguage: '',
+                                    targetLanguage: '',
+                                    sourceText: text
+                                })!
+                            }
+                            replace.set(s, text)
+                        }
+                    }
+                }
+                editor.edit(edit => {
+                    Array.from(replace.entries()).forEach(([s, text]) => {
+                        //@ts-ignore
+                        edit.replace(s, changeCase[method](text))
+                    })
+                })
+            });
+            quickPick.show();
+        }
+    }
+}

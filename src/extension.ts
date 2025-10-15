@@ -1,43 +1,33 @@
-import * as changeCase from 'change-case';
 import * as vscode from 'vscode';
-export function activate(context: vscode.ExtensionContext) {
-	const disposable = vscode.commands.registerCommand('transform-case.transform', () => {
-		const editor = vscode.window.activeTextEditor;
-		if (editor) {
-			const document = editor.document;
-			const selections = editor.selections;
-			const previewSelection = selections[0];
-			const moreSelection = selections.length - 1;
-			if (!previewSelection.isEmpty) {
-				const quickPick = vscode.window.createQuickPick();
-				let text = document.getText(previewSelection)
-				quickPick.items = Object.keys(changeCase).filter(k => k.endsWith("Case")).map(k => {
-					return {
-						//@ts-ignore
-						label: changeCase[k](text) + ` ← ${k}`,
-						description: `${moreSelection > 0 ? `${moreSelection}+` : ""}`
-					} as vscode.QuickPickItem
-				})
+import "./auto-loaded-effects"
+import { transfromCase } from './command/transform';
+import { GetTranslateProvider, InitProvidersContext, TranslateProviders } from './translate-provider/provider';
 
-				quickPick.onDidAccept(() => {
-					const acceptedItem = quickPick.selectedItems[0]
-					let method = acceptedItem.label?.split(" ").pop()
-					editor.edit(edit => {
-						selections.forEach(s => {
-							if (!s.isEmpty) {
-								let text = document.getText(s)
-								//@ts-ignore
-								edit.replace(s, changeCase[method](text))
-							}
-						})
-					})
-					quickPick.dispose();
-				});
-				quickPick.show();
+
+export function activate(context: vscode.ExtensionContext) {
+	InitProvidersContext(context)
+	context.subscriptions.push(
+		vscode.commands.registerCommand('transform-case.transform', () => transfromCase()),
+		vscode.commands.registerCommand('transform-case.transformWithTranslate', () => transfromCase(true)),
+		vscode.commands.registerCommand('transform-case.translateConfig', async () => {
+			let providerOptions = Array.from(
+				TranslateProviders.values()
+			).map(p => ({
+				id: p.id,
+				label: "$(circle-large-outline) " + p.name
+			}))
+			const selectedOption = await vscode.window.showQuickPick(providerOptions, {
+				title: 'Choose a provider',
+				placeHolder: 'Please select an option...',
+				ignoreFocusOut: true,
+			});
+			if (selectedOption) {
+				let provider = GetTranslateProvider(selectedOption.id)
+				vscode.window.showInformationMessage(`[${provider?.name}]` + await provider?.config?.() ? "configured" : "canceled")
 			}
-		}
-	});
-	context.subscriptions.push(disposable);
+		}),
+
+	);
 }
 
 export function deactivate() { }
