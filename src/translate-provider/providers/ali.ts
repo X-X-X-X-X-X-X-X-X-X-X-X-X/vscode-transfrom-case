@@ -51,6 +51,9 @@ class Client implements TranslateProvider {
         });
         let runtime = new $dara.RuntimeOptions({});
         let resp = await client.translateGeneralWithOptions(translateGeneralRequest, runtime);
+        if (resp.body?.code !== 200) {
+            throw new Error(resp.body?.message || JSON.stringify(resp.body))
+        }
         return resp.body!.data!.translated as string;
     }
 
