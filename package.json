@@ -2,7 +2,7 @@
   "name": "transform-case",
   "displayName": "Translation and Transform Case - XXC",
   "description": "",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "publisher": "xxc",
   "license": "MIT",
   "engines": {
