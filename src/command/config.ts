@@ -12,8 +12,9 @@ export const config = async () => {
         label: [
             current === p.id ? "$(pass-filled)" : "$(circle-large-outline)",
             p.name
-        ].join(" ")
-    }))
+        ].join(" "),
+        detail: p.description || "",
+    })) as (vscode.QuickPickItem & { id: string })[]
     const selectedOption = await vscode.window.showQuickPick(providerOptions, {
         title: 'Choose a provider',
         placeHolder: 'Please select an option...',
@@ -31,7 +32,7 @@ export const config = async () => {
                 text: provider!.name
             })
             await provider?.translate({
-                sourceText: '你好世界'
+                sourceText: '你好'
             })
         }
         vscode.window.showInformationMessage(`(${provider?.name}) ` + (configured ? "Configured" : "Canceled"))

@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 export interface TranslateProvider {
     id: string
     name: string
+    description?: string
     // 如果填写则在配置成功后自动将源语言与目标语言设置为对应的值
     sourceLanguage?: string
     targetLanguage?: string
