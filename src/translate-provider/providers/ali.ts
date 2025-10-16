@@ -56,13 +56,13 @@ class Client implements TranslateProvider {
 
     async config() {
         const accessKeyId = await vscode.window.showInputBox({
-            title: "Input AccessKey ID(1/2)",
+            title: "Input AccessKey ID (1/2)",
             prompt: 'AccessKey ID',
             ignoreFocusOut: true
         });
         if (!accessKeyId) return
         const accessKeySecret = await vscode.window.showInputBox({
-            title: "Input AccessKey Secret(2/2)",
+            title: "Input AccessKey Secret (2/2)",
             prompt: 'AccessKey Secret',
             password: true,
             ignoreFocusOut: true

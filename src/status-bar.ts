@@ -7,7 +7,9 @@ import { GetTranslateProvider } from './translate-provider/provider';
 export let statusBar: vscode.StatusBarItem;
 
 export const initStatusBar = () => {
-    statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 99)
+    if (!statusBar) {
+        statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 99)
+    }
     statusBar.command = extCommands.transformCaseTranslateConfig;
     statusBar.tooltip = "Transfrom Case translation configuration"
     let configuration = vscode.workspace.getConfiguration(configurationKey)
