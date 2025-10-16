@@ -23,8 +23,17 @@
       "properties": {
         "transform-case.current": {
           "type": "string",
-          "description": "Translation services currently in use(Do not change the values manually)",
-          "readonly": true
+          "description": "Translation services currently in use(Do not change the values manually)"
+        },
+        "transform-case.sourceLanguage": {
+          "type": "string",
+          "default": "auto",
+          "description": "Translate the source language"
+        },
+        "transform-case.targetLanguage": {
+          "type": "string",
+          "default": "en",
+          "description": "Translate the target language"
         }
       }
     },

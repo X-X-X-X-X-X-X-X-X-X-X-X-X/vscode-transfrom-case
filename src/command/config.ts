@@ -27,7 +27,10 @@ export const config = async () => {
             updateStatusBar({
                 text: provider!.name
             })
+            await provider?.translate({
+                sourceText: '你好世界'
+            })
         }
-        vscode.window.showInformationMessage(`(${provider?.name})` + (configured ? "configured" : "canceled"))
+        vscode.window.showInformationMessage(`(${provider?.name}) ` + (configured ? "Configured" : "Canceled"))
     }
 }

@@ -6,8 +6,8 @@ export interface TranslateProvider {
     context?: vscode.ExtensionContext
 
     translate(context: {
-        sourceLanguage: string
-        targetLanguage: string
+        sourceLanguage?: string
+        targetLanguage?: string
         sourceText: string
     }): Promise<string>
 
@@ -15,7 +15,9 @@ export interface TranslateProvider {
 }
 
 export type ExtConfig = {
-    current?: string
+    current?: string,
+    sourceLanguage: string
+    targetLanguage: string
 }
 
 export type ExtConfigKeys = keyof ExtConfig;

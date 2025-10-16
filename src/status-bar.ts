@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { extCommands } from './command/constants';
 import { configurationKey } from './constants';
 import { ExtConfigKeys } from './type';
+import { GetTranslateProvider } from './translate-provider/provider';
 
 export let statusBar: vscode.StatusBarItem;
 
@@ -11,7 +12,10 @@ export const initStatusBar = () => {
     statusBar.tooltip = "Transfrom Case translation configuration"
     let configuration = vscode.workspace.getConfiguration(configurationKey)
     let current = configuration.get<string>("current" as ExtConfigKeys)
-    statusBar.text = ["$(wrench)", current ? current : "Configuration required"].join(" ");
+    let name = GetTranslateProvider(current!)?.name
+    updateStatusBar({
+        text: name ? name : "Configuration required"
+    })
     statusBar.show()
     return statusBar;
 }
@@ -21,5 +25,5 @@ type updateStatusBarData = {
 }
 
 export const updateStatusBar = async (data: updateStatusBarData) => {
-    statusBar.text = data.text;
+    statusBar.text = ["$(wrench)", data.text].join(" ");
 }

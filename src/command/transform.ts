@@ -2,6 +2,8 @@ import * as changeCase from 'change-case';
 import * as vscode from 'vscode';
 import { GetTranslateProvider } from '../translate-provider/provider';
 import "../auto-loaded-effects"
+import { getConfig } from '../utils';
+import { extCommands } from './constants';
 
 export const transfromCase = async (translate?: boolean) => {
     const editor = vscode.window.activeTextEditor;
@@ -13,11 +15,13 @@ export const transfromCase = async (translate?: boolean) => {
         if (!previewSelection.isEmpty) {
             const quickPick = vscode.window.createQuickPick();
             let text = document.getText(previewSelection)
-            let translator = GetTranslateProvider()
+            let translator = GetTranslateProvider(getConfig("current"))
             if (translate) {
+                if (!translator) {
+                    await vscode.commands.executeCommand(extCommands.transformCaseTranslateConfig)
+                    return
+                }
                 text = await translator?.translate({
-                    sourceLanguage: '',
-                    targetLanguage: '',
                     sourceText: text
                 })!
             }
@@ -44,8 +48,6 @@ export const transfromCase = async (translate?: boolean) => {
                             let text = document.getText(s)
                             if (translate) {
                                 text = await await translator?.translate({
-                                    sourceLanguage: '',
-                                    targetLanguage: '',
                                     sourceText: text
                                 })!
                             }

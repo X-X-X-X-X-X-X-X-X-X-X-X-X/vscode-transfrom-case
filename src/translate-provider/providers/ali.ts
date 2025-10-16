@@ -44,8 +44,8 @@ class Client implements TranslateProvider {
         let client = await this.createClient();
         let translateGeneralRequest = new $alimt.TranslateGeneralRequest({
             formatType: "text",
-            sourceLanguage: "auto",
-            targetLanguage: "en",
+            sourceLanguage: context.sourceLanguage,
+            targetLanguage: context.targetLanguage,
             sourceText: context.sourceText,
             scene: "general",
         });

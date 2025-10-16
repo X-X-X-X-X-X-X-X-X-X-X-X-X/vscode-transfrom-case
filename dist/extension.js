@@ -33207,22 +33207,37 @@ var import_openapi_core = __toESM(require_client3());
 var import_credentials = __toESM(require_client());
 
 // src/translate-provider/provider.ts
+var vscode2 = __toESM(require("vscode"));
+
+// src/utils.ts
 var vscode = __toESM(require("vscode"));
+
+// src/constants.ts
+var configurationKey = "transform-case";
+
+// src/utils.ts
+var getConfig = (key) => {
+  return vscode.workspace.getConfiguration(configurationKey).get(key);
+};
+var setConfig = async (key, data) => {
+  await vscode.workspace.getConfiguration(configurationKey).update(key, data, true);
+};
+
+// src/translate-provider/provider.ts
 var TranslateProviders = /* @__PURE__ */ new Map();
 var GetTranslateProvider = (id) => {
-  if (id) {
-    return TranslateProviders.get(id);
-  }
-  return Array.from(TranslateProviders.values())[0];
+  return TranslateProviders.get(id || Date.now().toString());
 };
 var RegisterTranslateProvider = (provider) => {
   let providerInstance = new provider();
   let originTranslate = providerInstance.translate;
   providerInstance.translate = async (ctx) => {
     try {
+      ctx.sourceLanguage ??= getConfig("sourceLanguage");
+      ctx.targetLanguage ??= getConfig("targetLanguage");
       return await originTranslate.apply(providerInstance, [ctx]);
     } catch (error) {
-      vscode.window.showErrorMessage(`[${providerInstance.name}]Translate error: ${error.message || JSON.stringify(error)}`);
+      vscode2.window.showErrorMessage(`(${providerInstance.name}) Translate error: ${error.message || JSON.stringify(error)}`);
       return ctx.sourceText;
     }
   };
@@ -33233,7 +33248,7 @@ var InitProvidersContext = (ctx) => {
 };
 
 // src/translate-provider/providers/ali.ts
-var vscode2 = __toESM(require("vscode"));
+var vscode3 = __toESM(require("vscode"));
 var accessKeyIdStoreKey = "accessKeyId";
 var accessKeySecretStoreKey = "accessKeySecret";
 var Client = class {
@@ -33267,8 +33282,8 @@ var Client = class {
     let client = await this.createClient();
     let translateGeneralRequest = new $alimt.TranslateGeneralRequest({
       formatType: "text",
-      sourceLanguage: "auto",
-      targetLanguage: "en",
+      sourceLanguage: context.sourceLanguage,
+      targetLanguage: context.targetLanguage,
       sourceText: context.sourceText,
       scene: "general"
     });
@@ -33277,13 +33292,13 @@ var Client = class {
     return resp.body.data.translated;
   }
   async config() {
-    const accessKeyId = await vscode2.window.showInputBox({
+    const accessKeyId = await vscode3.window.showInputBox({
       title: "Input AccessKey ID(1/2)",
       prompt: "AccessKey ID",
       ignoreFocusOut: true
     });
     if (!accessKeyId) return;
-    const accessKeySecret = await vscode2.window.showInputBox({
+    const accessKeySecret = await vscode3.window.showInputBox({
       title: "Input AccessKey Secret(2/2)",
       prompt: "AccessKey Secret",
       password: true,
@@ -33301,34 +33316,23 @@ RegisterTranslateProvider(Client);
 var vscode5 = __toESM(require("vscode"));
 
 // src/status-bar.ts
-var vscode3 = __toESM(require("vscode"));
-
-// src/constants.ts
-var configurationKey = "transform-case";
-
-// src/status-bar.ts
+var vscode4 = __toESM(require("vscode"));
 var statusBar;
 var initStatusBar = () => {
-  statusBar = vscode3.window.createStatusBarItem(vscode3.StatusBarAlignment.Right, 99);
+  statusBar = vscode4.window.createStatusBarItem(vscode4.StatusBarAlignment.Right, 99);
   statusBar.command = "transform-case.translateConfig" /* transformCaseTranslateConfig */;
   statusBar.tooltip = "Transfrom Case translation configuration";
-  let configuration = vscode3.workspace.getConfiguration(configurationKey);
+  let configuration = vscode4.workspace.getConfiguration(configurationKey);
   let current = configuration.get("current");
-  statusBar.text = ["$(wrench)", current ? current : "Configuration required"].join(" ");
+  let name = GetTranslateProvider(current)?.name;
+  updateStatusBar({
+    text: name ? name : "Configuration required"
+  });
   statusBar.show();
   return statusBar;
 };
 var updateStatusBar = async (data) => {
-  statusBar.text = data.text;
-};
-
-// src/utils.ts
-var vscode4 = __toESM(require("vscode"));
-var getConfig = (key) => {
-  return vscode4.workspace.getConfiguration(configurationKey).get(key);
-};
-var setConfig = async (key, data) => {
-  await vscode4.workspace.getConfiguration(configurationKey).update(key, data, true);
+  statusBar.text = ["$(wrench)", data.text].join(" ");
 };
 
 // src/command/config.ts
@@ -33356,8 +33360,11 @@ var config = async () => {
       updateStatusBar({
         text: provider.name
       });
+      await provider?.translate({
+        sourceText: "\u4F60\u597D\u4E16\u754C"
+      });
     }
-    vscode5.window.showInformationMessage(`(${provider?.name})` + (configured ? "configured" : "canceled"));
+    vscode5.window.showInformationMessage(`(${provider?.name}) ` + (configured ? "Configured" : "Canceled"));
   }
 };
 
@@ -33526,11 +33533,13 @@ var transfromCase = async (translate) => {
     if (!previewSelection.isEmpty) {
       const quickPick = vscode6.window.createQuickPick();
       let text = document2.getText(previewSelection);
-      let translator = GetTranslateProvider();
+      let translator = GetTranslateProvider(getConfig("current"));
       if (translate) {
+        if (!translator) {
+          await vscode6.commands.executeCommand("transform-case.translateConfig" /* transformCaseTranslateConfig */);
+          return;
+        }
         text = await translator?.translate({
-          sourceLanguage: "",
-          targetLanguage: "",
           sourceText: text
         });
       }
@@ -33557,8 +33566,6 @@ var transfromCase = async (translate) => {
               let text2 = document2.getText(s);
               if (translate) {
                 text2 = await await translator?.translate({
-                  sourceLanguage: "",
-                  targetLanguage: "",
                   sourceText: text2
                 });
               }
