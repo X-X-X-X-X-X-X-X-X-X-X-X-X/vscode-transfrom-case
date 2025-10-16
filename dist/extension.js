@@ -3030,9 +3030,9 @@ var require_moment = __commonJS({
         }
         return to2;
       }
-      function Moment(config) {
-        copyConfig(this, config);
-        this._d = new Date(config._d != null ? config._d.getTime() : NaN);
+      function Moment(config2) {
+        copyConfig(this, config2);
+        this._d = new Date(config2._d != null ? config2._d.getTime() : NaN);
         if (!this.isValid()) {
           this._d = /* @__PURE__ */ new Date(NaN);
         }
@@ -3096,11 +3096,11 @@ var require_moment = __commonJS({
       function isFunction(input) {
         return typeof Function !== "undefined" && input instanceof Function || Object.prototype.toString.call(input) === "[object Function]";
       }
-      function set(config) {
+      function set(config2) {
         var prop, i;
-        for (i in config) {
-          if (hasOwnProp(config, i)) {
-            prop = config[i];
+        for (i in config2) {
+          if (hasOwnProp(config2, i)) {
+            prop = config2[i];
             if (isFunction(prop)) {
               this[i] = prop;
             } else {
@@ -3108,7 +3108,7 @@ var require_moment = __commonJS({
             }
           }
         }
-        this._config = config;
+        this._config = config2;
         this._dayOfMonthOrdinalParseLenient = new RegExp(
           (this._dayOfMonthOrdinalParse.source || this._ordinalParse.source) + "|" + /\d{1,2}/.source
         );
@@ -3135,9 +3135,9 @@ var require_moment = __commonJS({
         }
         return res;
       }
-      function Locale(config) {
-        if (config != null) {
-          this.set(config);
+      function Locale(config2) {
+        if (config2 != null) {
+          this.set(config2);
         }
       }
       var keys;
@@ -3399,11 +3399,11 @@ var require_moment = __commonJS({
           return isStrict && strictRegex ? strictRegex : regex;
         };
       }
-      function getParseRegexForToken(token2, config) {
+      function getParseRegexForToken(token2, config2) {
         if (!hasOwnProp(regexes, token2)) {
           return new RegExp(unescapeFormat(token2));
         }
-        return regexes[token2](config._strict, config._locale);
+        return regexes[token2](config2._strict, config2._locale);
       }
       function unescapeFormat(s) {
         return regexEscape(
@@ -3449,14 +3449,14 @@ var require_moment = __commonJS({
         }
       }
       function addWeekParseToken(token2, callback) {
-        addParseToken(token2, function(input, array, config, token3) {
-          config._w = config._w || {};
-          callback(input, config._w, config, token3);
+        addParseToken(token2, function(input, array, config2, token3) {
+          config2._w = config2._w || {};
+          callback(input, config2._w, config2, token3);
         });
       }
-      function addTimeToArrayFromToken(token2, input, config) {
+      function addTimeToArrayFromToken(token2, input, config2) {
         if (input != null && hasOwnProp(tokens, token2)) {
-          tokens[token2](input, config._a, config, token2);
+          tokens[token2](input, config2._a, config2, token2);
         }
       }
       function isLeapYear(year) {
@@ -3636,12 +3636,12 @@ var require_moment = __commonJS({
       addParseToken(["M", "MM"], function(input, array) {
         array[MONTH] = toInt(input) - 1;
       });
-      addParseToken(["MMM", "MMMM"], function(input, array, config, token2) {
-        var month = config._locale.monthsParse(input, token2, config._strict);
+      addParseToken(["MMM", "MMMM"], function(input, array, config2, token2) {
+        var month = config2._locale.monthsParse(input, token2, config2._strict);
         if (month != null) {
           array[MONTH] = month;
         } else {
-          getParsingFlags(config).invalidMonth = input;
+          getParsingFlags(config2).invalidMonth = input;
         }
       });
       var defaultLocaleMonths = "January_February_March_April_May_June_July_August_September_October_November_December".split(
@@ -3904,7 +3904,7 @@ var require_moment = __commonJS({
       addRegexToken("WW", match1to2, match2);
       addWeekParseToken(
         ["w", "ww", "W", "WW"],
-        function(input, week, config, token2) {
+        function(input, week, config2, token2) {
           week[token2.substr(0, 1)] = toInt(input);
         }
       );
@@ -3955,15 +3955,15 @@ var require_moment = __commonJS({
       addRegexToken("dddd", function(isStrict, locale2) {
         return locale2.weekdaysRegex(isStrict);
       });
-      addWeekParseToken(["dd", "ddd", "dddd"], function(input, week, config, token2) {
-        var weekday = config._locale.weekdaysParse(input, token2, config._strict);
+      addWeekParseToken(["dd", "ddd", "dddd"], function(input, week, config2, token2) {
+        var weekday = config2._locale.weekdaysParse(input, token2, config2._strict);
         if (weekday != null) {
           week.d = weekday;
         } else {
-          getParsingFlags(config).invalidWeekday = input;
+          getParsingFlags(config2).invalidWeekday = input;
         }
       });
-      addWeekParseToken(["d", "e", "E"], function(input, week, config, token2) {
+      addWeekParseToken(["d", "e", "E"], function(input, week, config2, token2) {
         week[token2] = toInt(input);
       });
       function parseWeekday(input, locale2) {
@@ -4274,37 +4274,37 @@ var require_moment = __commonJS({
       addRegexToken("Hmm", match3to4);
       addRegexToken("Hmmss", match5to6);
       addParseToken(["H", "HH"], HOUR);
-      addParseToken(["k", "kk"], function(input, array, config) {
+      addParseToken(["k", "kk"], function(input, array, config2) {
         var kInput = toInt(input);
         array[HOUR] = kInput === 24 ? 0 : kInput;
       });
-      addParseToken(["a", "A"], function(input, array, config) {
-        config._isPm = config._locale.isPM(input);
-        config._meridiem = input;
+      addParseToken(["a", "A"], function(input, array, config2) {
+        config2._isPm = config2._locale.isPM(input);
+        config2._meridiem = input;
       });
-      addParseToken(["h", "hh"], function(input, array, config) {
+      addParseToken(["h", "hh"], function(input, array, config2) {
         array[HOUR] = toInt(input);
-        getParsingFlags(config).bigHour = true;
+        getParsingFlags(config2).bigHour = true;
       });
-      addParseToken("hmm", function(input, array, config) {
+      addParseToken("hmm", function(input, array, config2) {
         var pos = input.length - 2;
         array[HOUR] = toInt(input.substr(0, pos));
         array[MINUTE] = toInt(input.substr(pos));
-        getParsingFlags(config).bigHour = true;
+        getParsingFlags(config2).bigHour = true;
       });
-      addParseToken("hmmss", function(input, array, config) {
+      addParseToken("hmmss", function(input, array, config2) {
         var pos1 = input.length - 4, pos2 = input.length - 2;
         array[HOUR] = toInt(input.substr(0, pos1));
         array[MINUTE] = toInt(input.substr(pos1, 2));
         array[SECOND] = toInt(input.substr(pos2));
-        getParsingFlags(config).bigHour = true;
+        getParsingFlags(config2).bigHour = true;
       });
-      addParseToken("Hmm", function(input, array, config) {
+      addParseToken("Hmm", function(input, array, config2) {
         var pos = input.length - 2;
         array[HOUR] = toInt(input.substr(0, pos));
         array[MINUTE] = toInt(input.substr(pos));
       });
-      addParseToken("Hmmss", function(input, array, config) {
+      addParseToken("Hmmss", function(input, array, config2) {
         var pos1 = input.length - 4, pos2 = input.length - 2;
         array[HOUR] = toInt(input.substr(0, pos1));
         array[MINUTE] = toInt(input.substr(pos1, 2));
@@ -4407,36 +4407,36 @@ var require_moment = __commonJS({
         }
         return globalLocale._abbr;
       }
-      function defineLocale(name, config) {
-        if (config !== null) {
+      function defineLocale(name, config2) {
+        if (config2 !== null) {
           var locale2, parentConfig = baseConfig;
-          config.abbr = name;
+          config2.abbr = name;
           if (locales[name] != null) {
             deprecateSimple(
               "defineLocaleOverride",
               "use moment.updateLocale(localeName, config) to change an existing locale. moment.defineLocale(localeName, config) should only be used for creating a new locale See http://momentjs.com/guides/#/warnings/define-locale/ for more info."
             );
             parentConfig = locales[name]._config;
-          } else if (config.parentLocale != null) {
-            if (locales[config.parentLocale] != null) {
-              parentConfig = locales[config.parentLocale]._config;
+          } else if (config2.parentLocale != null) {
+            if (locales[config2.parentLocale] != null) {
+              parentConfig = locales[config2.parentLocale]._config;
             } else {
-              locale2 = loadLocale(config.parentLocale);
+              locale2 = loadLocale(config2.parentLocale);
               if (locale2 != null) {
                 parentConfig = locale2._config;
               } else {
-                if (!localeFamilies[config.parentLocale]) {
-                  localeFamilies[config.parentLocale] = [];
+                if (!localeFamilies[config2.parentLocale]) {
+                  localeFamilies[config2.parentLocale] = [];
                 }
-                localeFamilies[config.parentLocale].push({
+                localeFamilies[config2.parentLocale].push({
                   name,
-                  config
+                  config: config2
                 });
                 return null;
               }
             }
           }
-          locales[name] = new Locale(mergeConfigs(parentConfig, config));
+          locales[name] = new Locale(mergeConfigs(parentConfig, config2));
           if (localeFamilies[name]) {
             localeFamilies[name].forEach(function(x) {
               defineLocale(x.name, x.config);
@@ -4449,21 +4449,21 @@ var require_moment = __commonJS({
           return null;
         }
       }
-      function updateLocale(name, config) {
-        if (config != null) {
+      function updateLocale(name, config2) {
+        if (config2 != null) {
           var locale2, tmpLocale, parentConfig = baseConfig;
           if (locales[name] != null && locales[name].parentLocale != null) {
-            locales[name].set(mergeConfigs(locales[name]._config, config));
+            locales[name].set(mergeConfigs(locales[name]._config, config2));
           } else {
             tmpLocale = loadLocale(name);
             if (tmpLocale != null) {
               parentConfig = tmpLocale._config;
             }
-            config = mergeConfigs(parentConfig, config);
+            config2 = mergeConfigs(parentConfig, config2);
             if (tmpLocale == null) {
-              config.abbr = name;
+              config2.abbr = name;
             }
-            locale2 = new Locale(config);
+            locale2 = new Locale(config2);
             locale2.parentLocale = locales[name];
             locales[name] = locale2;
           }
@@ -4555,10 +4555,10 @@ var require_moment = __commonJS({
         PDT: -7 * 60,
         PST: -8 * 60
       };
-      function configFromISO(config) {
-        var i, l, string = config._i, match = extendedIsoRegex.exec(string) || basicIsoRegex.exec(string), allowTime, dateFormat, timeFormat, tzFormat, isoDatesLen = isoDates.length, isoTimesLen = isoTimes.length;
+      function configFromISO(config2) {
+        var i, l, string = config2._i, match = extendedIsoRegex.exec(string) || basicIsoRegex.exec(string), allowTime, dateFormat, timeFormat, tzFormat, isoDatesLen = isoDates.length, isoTimesLen = isoTimes.length;
         if (match) {
-          getParsingFlags(config).iso = true;
+          getParsingFlags(config2).iso = true;
           for (i = 0, l = isoDatesLen; i < l; i++) {
             if (isoDates[i][1].exec(match[1])) {
               dateFormat = isoDates[i][0];
@@ -4567,7 +4567,7 @@ var require_moment = __commonJS({
             }
           }
           if (dateFormat == null) {
-            config._isValid = false;
+            config2._isValid = false;
             return;
           }
           if (match[3]) {
@@ -4578,26 +4578,26 @@ var require_moment = __commonJS({
               }
             }
             if (timeFormat == null) {
-              config._isValid = false;
+              config2._isValid = false;
               return;
             }
           }
           if (!allowTime && timeFormat != null) {
-            config._isValid = false;
+            config2._isValid = false;
             return;
           }
           if (match[4]) {
             if (tzRegex.exec(match[4])) {
               tzFormat = "Z";
             } else {
-              config._isValid = false;
+              config2._isValid = false;
               return;
             }
           }
-          config._f = dateFormat + (timeFormat || "") + (tzFormat || "");
-          configFromStringAndFormat(config);
+          config2._f = dateFormat + (timeFormat || "") + (tzFormat || "");
+          configFromStringAndFormat(config2);
         } else {
-          config._isValid = false;
+          config2._isValid = false;
         }
       }
       function extractFromRFC2822Strings(yearStr, monthStr, dayStr, hourStr, minuteStr, secondStr) {
@@ -4625,7 +4625,7 @@ var require_moment = __commonJS({
       function preprocessRFC2822(s) {
         return s.replace(/\([^()]*\)|[\n\t]/g, " ").replace(/(\s\s+)/g, " ").replace(/^\s\s*/, "").replace(/\s\s*$/, "");
       }
-      function checkWeekday(weekdayStr, parsedInput, config) {
+      function checkWeekday(weekdayStr, parsedInput, config2) {
         if (weekdayStr) {
           var weekdayProvided = defaultLocaleWeekdaysShort.indexOf(weekdayStr), weekdayActual = new Date(
             parsedInput[0],
@@ -4633,8 +4633,8 @@ var require_moment = __commonJS({
             parsedInput[2]
           ).getDay();
           if (weekdayProvided !== weekdayActual) {
-            getParsingFlags(config).weekdayMismatch = true;
-            config._isValid = false;
+            getParsingFlags(config2).weekdayMismatch = true;
+            config2._isValid = false;
             return false;
           }
         }
@@ -4650,8 +4650,8 @@ var require_moment = __commonJS({
           return h * 60 + m;
         }
       }
-      function configFromRFC2822(config) {
-        var match = rfc2822.exec(preprocessRFC2822(config._i)), parsedArray;
+      function configFromRFC2822(config2) {
+        var match = rfc2822.exec(preprocessRFC2822(config2._i)), parsedArray;
         if (match) {
           parsedArray = extractFromRFC2822Strings(
             match[4],
@@ -4661,46 +4661,46 @@ var require_moment = __commonJS({
             match[6],
             match[7]
           );
-          if (!checkWeekday(match[1], parsedArray, config)) {
+          if (!checkWeekday(match[1], parsedArray, config2)) {
             return;
           }
-          config._a = parsedArray;
-          config._tzm = calculateOffset(match[8], match[9], match[10]);
-          config._d = createUTCDate.apply(null, config._a);
-          config._d.setUTCMinutes(config._d.getUTCMinutes() - config._tzm);
-          getParsingFlags(config).rfc2822 = true;
+          config2._a = parsedArray;
+          config2._tzm = calculateOffset(match[8], match[9], match[10]);
+          config2._d = createUTCDate.apply(null, config2._a);
+          config2._d.setUTCMinutes(config2._d.getUTCMinutes() - config2._tzm);
+          getParsingFlags(config2).rfc2822 = true;
         } else {
-          config._isValid = false;
+          config2._isValid = false;
         }
       }
-      function configFromString(config) {
-        var matched = aspNetJsonRegex.exec(config._i);
+      function configFromString(config2) {
+        var matched = aspNetJsonRegex.exec(config2._i);
         if (matched !== null) {
-          config._d = /* @__PURE__ */ new Date(+matched[1]);
+          config2._d = /* @__PURE__ */ new Date(+matched[1]);
           return;
         }
-        configFromISO(config);
-        if (config._isValid === false) {
-          delete config._isValid;
+        configFromISO(config2);
+        if (config2._isValid === false) {
+          delete config2._isValid;
         } else {
           return;
         }
-        configFromRFC2822(config);
-        if (config._isValid === false) {
-          delete config._isValid;
+        configFromRFC2822(config2);
+        if (config2._isValid === false) {
+          delete config2._isValid;
         } else {
           return;
         }
-        if (config._strict) {
-          config._isValid = false;
+        if (config2._strict) {
+          config2._isValid = false;
         } else {
-          hooks.createFromInputFallback(config);
+          hooks.createFromInputFallback(config2);
         }
       }
       hooks.createFromInputFallback = deprecate(
         "value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(), which is not reliable across all browsers and versions. Non RFC2822/ISO date formats are discouraged. Please refer to http://momentjs.com/guides/#/warnings/js-date/ for more info.",
-        function(config) {
-          config._d = /* @__PURE__ */ new Date(config._i + (config._useUTC ? " UTC" : ""));
+        function(config2) {
+          config2._d = /* @__PURE__ */ new Date(config2._i + (config2._useUTC ? " UTC" : ""));
         }
       );
       function defaults(a, b, c) {
@@ -4712,9 +4712,9 @@ var require_moment = __commonJS({
         }
         return c;
       }
-      function currentDateArray(config) {
+      function currentDateArray(config2) {
         var nowValue = new Date(hooks.now());
-        if (config._useUTC) {
+        if (config2._useUTC) {
           return [
             nowValue.getUTCFullYear(),
             nowValue.getUTCMonth(),
@@ -4723,58 +4723,58 @@ var require_moment = __commonJS({
         }
         return [nowValue.getFullYear(), nowValue.getMonth(), nowValue.getDate()];
       }
-      function configFromArray(config) {
+      function configFromArray(config2) {
         var i, date, input = [], currentDate, expectedWeekday, yearToUse;
-        if (config._d) {
+        if (config2._d) {
           return;
         }
-        currentDate = currentDateArray(config);
-        if (config._w && config._a[DATE] == null && config._a[MONTH] == null) {
-          dayOfYearFromWeekInfo(config);
+        currentDate = currentDateArray(config2);
+        if (config2._w && config2._a[DATE] == null && config2._a[MONTH] == null) {
+          dayOfYearFromWeekInfo(config2);
         }
-        if (config._dayOfYear != null) {
-          yearToUse = defaults(config._a[YEAR], currentDate[YEAR]);
-          if (config._dayOfYear > daysInYear(yearToUse) || config._dayOfYear === 0) {
-            getParsingFlags(config)._overflowDayOfYear = true;
+        if (config2._dayOfYear != null) {
+          yearToUse = defaults(config2._a[YEAR], currentDate[YEAR]);
+          if (config2._dayOfYear > daysInYear(yearToUse) || config2._dayOfYear === 0) {
+            getParsingFlags(config2)._overflowDayOfYear = true;
           }
-          date = createUTCDate(yearToUse, 0, config._dayOfYear);
-          config._a[MONTH] = date.getUTCMonth();
-          config._a[DATE] = date.getUTCDate();
+          date = createUTCDate(yearToUse, 0, config2._dayOfYear);
+          config2._a[MONTH] = date.getUTCMonth();
+          config2._a[DATE] = date.getUTCDate();
         }
-        for (i = 0; i < 3 && config._a[i] == null; ++i) {
-          config._a[i] = input[i] = currentDate[i];
+        for (i = 0; i < 3 && config2._a[i] == null; ++i) {
+          config2._a[i] = input[i] = currentDate[i];
         }
         for (; i < 7; i++) {
-          config._a[i] = input[i] = config._a[i] == null ? i === 2 ? 1 : 0 : config._a[i];
+          config2._a[i] = input[i] = config2._a[i] == null ? i === 2 ? 1 : 0 : config2._a[i];
         }
-        if (config._a[HOUR] === 24 && config._a[MINUTE] === 0 && config._a[SECOND] === 0 && config._a[MILLISECOND] === 0) {
-          config._nextDay = true;
-          config._a[HOUR] = 0;
+        if (config2._a[HOUR] === 24 && config2._a[MINUTE] === 0 && config2._a[SECOND] === 0 && config2._a[MILLISECOND] === 0) {
+          config2._nextDay = true;
+          config2._a[HOUR] = 0;
         }
-        config._d = (config._useUTC ? createUTCDate : createDate).apply(
+        config2._d = (config2._useUTC ? createUTCDate : createDate).apply(
           null,
           input
         );
-        expectedWeekday = config._useUTC ? config._d.getUTCDay() : config._d.getDay();
-        if (config._tzm != null) {
-          config._d.setUTCMinutes(config._d.getUTCMinutes() - config._tzm);
+        expectedWeekday = config2._useUTC ? config2._d.getUTCDay() : config2._d.getDay();
+        if (config2._tzm != null) {
+          config2._d.setUTCMinutes(config2._d.getUTCMinutes() - config2._tzm);
         }
-        if (config._nextDay) {
-          config._a[HOUR] = 24;
+        if (config2._nextDay) {
+          config2._a[HOUR] = 24;
         }
-        if (config._w && typeof config._w.d !== "undefined" && config._w.d !== expectedWeekday) {
-          getParsingFlags(config).weekdayMismatch = true;
+        if (config2._w && typeof config2._w.d !== "undefined" && config2._w.d !== expectedWeekday) {
+          getParsingFlags(config2).weekdayMismatch = true;
         }
       }
-      function dayOfYearFromWeekInfo(config) {
+      function dayOfYearFromWeekInfo(config2) {
         var w, weekYear, week, weekday, dow, doy, temp, weekdayOverflow, curWeek;
-        w = config._w;
+        w = config2._w;
         if (w.GG != null || w.W != null || w.E != null) {
           dow = 1;
           doy = 4;
           weekYear = defaults(
             w.GG,
-            config._a[YEAR],
+            config2._a[YEAR],
             weekOfYear(createLocal(), 1, 4).year
           );
           week = defaults(w.W, 1);
@@ -4783,10 +4783,10 @@ var require_moment = __commonJS({
             weekdayOverflow = true;
           }
         } else {
-          dow = config._locale._week.dow;
-          doy = config._locale._week.doy;
+          dow = config2._locale._week.dow;
+          doy = config2._locale._week.doy;
           curWeek = weekOfYear(createLocal(), dow, doy);
-          weekYear = defaults(w.gg, config._a[YEAR], curWeek.year);
+          weekYear = defaults(w.gg, config2._a[YEAR], curWeek.year);
           week = defaults(w.w, curWeek.week);
           if (w.d != null) {
             weekday = w.d;
@@ -4803,40 +4803,40 @@ var require_moment = __commonJS({
           }
         }
         if (week < 1 || week > weeksInYear(weekYear, dow, doy)) {
-          getParsingFlags(config)._overflowWeeks = true;
+          getParsingFlags(config2)._overflowWeeks = true;
         } else if (weekdayOverflow != null) {
-          getParsingFlags(config)._overflowWeekday = true;
+          getParsingFlags(config2)._overflowWeekday = true;
         } else {
           temp = dayOfYearFromWeeks(weekYear, week, weekday, dow, doy);
-          config._a[YEAR] = temp.year;
-          config._dayOfYear = temp.dayOfYear;
+          config2._a[YEAR] = temp.year;
+          config2._dayOfYear = temp.dayOfYear;
         }
       }
       hooks.ISO_8601 = function() {
       };
       hooks.RFC_2822 = function() {
       };
-      function configFromStringAndFormat(config) {
-        if (config._f === hooks.ISO_8601) {
-          configFromISO(config);
+      function configFromStringAndFormat(config2) {
+        if (config2._f === hooks.ISO_8601) {
+          configFromISO(config2);
           return;
         }
-        if (config._f === hooks.RFC_2822) {
-          configFromRFC2822(config);
+        if (config2._f === hooks.RFC_2822) {
+          configFromRFC2822(config2);
           return;
         }
-        config._a = [];
-        getParsingFlags(config).empty = true;
-        var string = "" + config._i, i, parsedInput, tokens2, token2, skipped, stringLength = string.length, totalParsedInputLength = 0, era, tokenLen;
-        tokens2 = expandFormat(config._f, config._locale).match(formattingTokens) || [];
+        config2._a = [];
+        getParsingFlags(config2).empty = true;
+        var string = "" + config2._i, i, parsedInput, tokens2, token2, skipped, stringLength = string.length, totalParsedInputLength = 0, era, tokenLen;
+        tokens2 = expandFormat(config2._f, config2._locale).match(formattingTokens) || [];
         tokenLen = tokens2.length;
         for (i = 0; i < tokenLen; i++) {
           token2 = tokens2[i];
-          parsedInput = (string.match(getParseRegexForToken(token2, config)) || [])[0];
+          parsedInput = (string.match(getParseRegexForToken(token2, config2)) || [])[0];
           if (parsedInput) {
             skipped = string.substr(0, string.indexOf(parsedInput));
             if (skipped.length > 0) {
-              getParsingFlags(config).unusedInput.push(skipped);
+              getParsingFlags(config2).unusedInput.push(skipped);
             }
             string = string.slice(
               string.indexOf(parsedInput) + parsedInput.length
@@ -4845,35 +4845,35 @@ var require_moment = __commonJS({
           }
           if (formatTokenFunctions[token2]) {
             if (parsedInput) {
-              getParsingFlags(config).empty = false;
+              getParsingFlags(config2).empty = false;
             } else {
-              getParsingFlags(config).unusedTokens.push(token2);
+              getParsingFlags(config2).unusedTokens.push(token2);
             }
-            addTimeToArrayFromToken(token2, parsedInput, config);
-          } else if (config._strict && !parsedInput) {
-            getParsingFlags(config).unusedTokens.push(token2);
+            addTimeToArrayFromToken(token2, parsedInput, config2);
+          } else if (config2._strict && !parsedInput) {
+            getParsingFlags(config2).unusedTokens.push(token2);
           }
         }
-        getParsingFlags(config).charsLeftOver = stringLength - totalParsedInputLength;
+        getParsingFlags(config2).charsLeftOver = stringLength - totalParsedInputLength;
         if (string.length > 0) {
-          getParsingFlags(config).unusedInput.push(string);
+          getParsingFlags(config2).unusedInput.push(string);
         }
-        if (config._a[HOUR] <= 12 && getParsingFlags(config).bigHour === true && config._a[HOUR] > 0) {
-          getParsingFlags(config).bigHour = void 0;
+        if (config2._a[HOUR] <= 12 && getParsingFlags(config2).bigHour === true && config2._a[HOUR] > 0) {
+          getParsingFlags(config2).bigHour = void 0;
         }
-        getParsingFlags(config).parsedDateParts = config._a.slice(0);
-        getParsingFlags(config).meridiem = config._meridiem;
-        config._a[HOUR] = meridiemFixWrap(
-          config._locale,
-          config._a[HOUR],
-          config._meridiem
+        getParsingFlags(config2).parsedDateParts = config2._a.slice(0);
+        getParsingFlags(config2).meridiem = config2._meridiem;
+        config2._a[HOUR] = meridiemFixWrap(
+          config2._locale,
+          config2._a[HOUR],
+          config2._meridiem
         );
-        era = getParsingFlags(config).era;
+        era = getParsingFlags(config2).era;
         if (era !== null) {
-          config._a[YEAR] = config._locale.erasConvertYear(era, config._a[YEAR]);
+          config2._a[YEAR] = config2._locale.erasConvertYear(era, config2._a[YEAR]);
         }
-        configFromArray(config);
-        checkOverflow(config);
+        configFromArray(config2);
+        checkOverflow(config2);
       }
       function meridiemFixWrap(locale2, hour, meridiem2) {
         var isPm;
@@ -4895,21 +4895,21 @@ var require_moment = __commonJS({
           return hour;
         }
       }
-      function configFromStringAndArray(config) {
-        var tempConfig, bestMoment, scoreToBeat, i, currentScore, validFormatFound, bestFormatIsValid = false, configfLen = config._f.length;
+      function configFromStringAndArray(config2) {
+        var tempConfig, bestMoment, scoreToBeat, i, currentScore, validFormatFound, bestFormatIsValid = false, configfLen = config2._f.length;
         if (configfLen === 0) {
-          getParsingFlags(config).invalidFormat = true;
-          config._d = /* @__PURE__ */ new Date(NaN);
+          getParsingFlags(config2).invalidFormat = true;
+          config2._d = /* @__PURE__ */ new Date(NaN);
           return;
         }
         for (i = 0; i < configfLen; i++) {
           currentScore = 0;
           validFormatFound = false;
-          tempConfig = copyConfig({}, config);
-          if (config._useUTC != null) {
-            tempConfig._useUTC = config._useUTC;
+          tempConfig = copyConfig({}, config2);
+          if (config2._useUTC != null) {
+            tempConfig._useUTC = config2._useUTC;
           }
-          tempConfig._f = config._f[i];
+          tempConfig._f = config2._f[i];
           configFromStringAndFormat(tempConfig);
           if (isValid(tempConfig)) {
             validFormatFound = true;
@@ -4932,73 +4932,73 @@ var require_moment = __commonJS({
             }
           }
         }
-        extend(config, bestMoment || tempConfig);
+        extend(config2, bestMoment || tempConfig);
       }
-      function configFromObject(config) {
-        if (config._d) {
+      function configFromObject(config2) {
+        if (config2._d) {
           return;
         }
-        var i = normalizeObjectUnits(config._i), dayOrDate = i.day === void 0 ? i.date : i.day;
-        config._a = map(
+        var i = normalizeObjectUnits(config2._i), dayOrDate = i.day === void 0 ? i.date : i.day;
+        config2._a = map(
           [i.year, i.month, dayOrDate, i.hour, i.minute, i.second, i.millisecond],
           function(obj) {
             return obj && parseInt(obj, 10);
           }
         );
-        configFromArray(config);
+        configFromArray(config2);
       }
-      function createFromConfig(config) {
-        var res = new Moment(checkOverflow(prepareConfig(config)));
+      function createFromConfig(config2) {
+        var res = new Moment(checkOverflow(prepareConfig(config2)));
         if (res._nextDay) {
           res.add(1, "d");
           res._nextDay = void 0;
         }
         return res;
       }
-      function prepareConfig(config) {
-        var input = config._i, format2 = config._f;
-        config._locale = config._locale || getLocale(config._l);
+      function prepareConfig(config2) {
+        var input = config2._i, format2 = config2._f;
+        config2._locale = config2._locale || getLocale(config2._l);
         if (input === null || format2 === void 0 && input === "") {
           return createInvalid({ nullInput: true });
         }
         if (typeof input === "string") {
-          config._i = input = config._locale.preparse(input);
+          config2._i = input = config2._locale.preparse(input);
         }
         if (isMoment(input)) {
           return new Moment(checkOverflow(input));
         } else if (isDate(input)) {
-          config._d = input;
+          config2._d = input;
         } else if (isArray(format2)) {
-          configFromStringAndArray(config);
+          configFromStringAndArray(config2);
         } else if (format2) {
-          configFromStringAndFormat(config);
+          configFromStringAndFormat(config2);
         } else {
-          configFromInput(config);
+          configFromInput(config2);
         }
-        if (!isValid(config)) {
-          config._d = null;
+        if (!isValid(config2)) {
+          config2._d = null;
         }
-        return config;
+        return config2;
       }
-      function configFromInput(config) {
-        var input = config._i;
+      function configFromInput(config2) {
+        var input = config2._i;
         if (isUndefined(input)) {
-          config._d = new Date(hooks.now());
+          config2._d = new Date(hooks.now());
         } else if (isDate(input)) {
-          config._d = new Date(input.valueOf());
+          config2._d = new Date(input.valueOf());
         } else if (typeof input === "string") {
-          configFromString(config);
+          configFromString(config2);
         } else if (isArray(input)) {
-          config._a = map(input.slice(0), function(obj) {
+          config2._a = map(input.slice(0), function(obj) {
             return parseInt(obj, 10);
           });
-          configFromArray(config);
+          configFromArray(config2);
         } else if (isObject(input)) {
-          configFromObject(config);
+          configFromObject(config2);
         } else if (isNumber(input)) {
-          config._d = new Date(input);
+          config2._d = new Date(input);
         } else {
-          hooks.createFromInputFallback(config);
+          hooks.createFromInputFallback(config2);
         }
       }
       function createLocalOrUTC(input, format2, locale2, strict, isUTC) {
@@ -5154,9 +5154,9 @@ var require_moment = __commonJS({
       offset("ZZ", "");
       addRegexToken("Z", matchShortOffset);
       addRegexToken("ZZ", matchShortOffset);
-      addParseToken(["Z", "ZZ"], function(input, array, config) {
-        config._useUTC = true;
-        config._tzm = offsetFromString(matchShortOffset, input);
+      addParseToken(["Z", "ZZ"], function(input, array, config2) {
+        config2._useUTC = true;
+        config2._tzm = offsetFromString(matchShortOffset, input);
       });
       var chunkOffset = /([\+\-]|\d\d)/gi;
       function offsetFromString(matcher, string) {
@@ -5923,12 +5923,12 @@ var require_moment = __commonJS({
       addRegexToken("NNNNN", matchEraNarrow);
       addParseToken(
         ["N", "NN", "NNN", "NNNN", "NNNNN"],
-        function(input, array, config, token2) {
-          var era = config._locale.erasParse(input, token2, config._strict);
+        function(input, array, config2, token2) {
+          var era = config2._locale.erasParse(input, token2, config2._strict);
           if (era) {
-            getParsingFlags(config).era = era;
+            getParsingFlags(config2).era = era;
           } else {
-            getParsingFlags(config).invalidEra = input;
+            getParsingFlags(config2).invalidEra = input;
           }
         }
       );
@@ -5938,13 +5938,13 @@ var require_moment = __commonJS({
       addRegexToken("yyyy", matchUnsigned);
       addRegexToken("yo", matchEraYearOrdinal);
       addParseToken(["y", "yy", "yyy", "yyyy"], YEAR);
-      addParseToken(["yo"], function(input, array, config, token2) {
+      addParseToken(["yo"], function(input, array, config2, token2) {
         var match;
-        if (config._locale._eraYearOrdinalRegex) {
-          match = input.match(config._locale._eraYearOrdinalRegex);
+        if (config2._locale._eraYearOrdinalRegex) {
+          match = input.match(config2._locale._eraYearOrdinalRegex);
         }
-        if (config._locale.eraYearOrdinalParse) {
-          array[YEAR] = config._locale.eraYearOrdinalParse(input, match);
+        if (config2._locale.eraYearOrdinalParse) {
+          array[YEAR] = config2._locale.eraYearOrdinalParse(input, match);
         } else {
           array[YEAR] = parseInt(input, 10);
         }
@@ -6134,11 +6134,11 @@ var require_moment = __commonJS({
       addRegexToken("ggggg", match1to6, match6);
       addWeekParseToken(
         ["gggg", "ggggg", "GGGG", "GGGGG"],
-        function(input, week, config, token2) {
+        function(input, week, config2, token2) {
           week[token2.substr(0, 2)] = toInt(input);
         }
       );
-      addWeekParseToken(["gg", "GG"], function(input, week, config, token2) {
+      addWeekParseToken(["gg", "GG"], function(input, week, config2, token2) {
         week[token2] = hooks.parseTwoDigitYear(input);
       });
       function getSetWeekYear(input) {
@@ -6216,8 +6216,8 @@ var require_moment = __commonJS({
       addFormatToken("DDD", ["DDDD", 3], "DDDo", "dayOfYear");
       addRegexToken("DDD", match1to3);
       addRegexToken("DDDD", match3);
-      addParseToken(["DDD", "DDDD"], function(input, array, config) {
-        config._dayOfYear = toInt(input);
+      addParseToken(["DDD", "DDDD"], function(input, array, config2) {
+        config2._dayOfYear = toInt(input);
       });
       function getSetDayOfYear(input) {
         var dayOfYear = Math.round(
@@ -6789,11 +6789,11 @@ var require_moment = __commonJS({
       addFormatToken("x", 0, 0, "valueOf");
       addRegexToken("x", matchSigned);
       addRegexToken("X", matchTimestamp);
-      addParseToken("X", function(input, array, config) {
-        config._d = new Date(parseFloat(input) * 1e3);
+      addParseToken("X", function(input, array, config2) {
+        config2._d = new Date(parseFloat(input) * 1e3);
       });
-      addParseToken("x", function(input, array, config) {
-        config._d = new Date(toInt(input));
+      addParseToken("x", function(input, array, config2) {
+        config2._d = new Date(toInt(input));
       });
       hooks.version = "2.30.1";
       setHookCallback(createLocal);
@@ -19481,12 +19481,12 @@ var require_default_credential = __commonJS({
     Object.defineProperty(exports2, "__esModule", { value: true });
     var credential_model_1 = __importDefault(require_credential_model());
     var DefaultCredential = class {
-      constructor(config) {
-        this.accessKeyId = config.accessKeyId || "";
-        this.accessKeySecret = config.accessKeySecret || "";
-        this.securityToken = config.securityToken || "";
-        this.bearerToken = config.bearerToken || "";
-        this.type = config.type || "";
+      constructor(config2) {
+        this.accessKeyId = config2.accessKeyId || "";
+        this.accessKeySecret = config2.accessKeySecret || "";
+        this.securityToken = config2.securityToken || "";
+        this.bearerToken = config2.bearerToken || "";
+        this.type = config2.type || "";
       }
       async getAccessKeyId() {
         return this.accessKeyId;
@@ -20034,8 +20034,8 @@ var require_config = __commonJS({
           type: "string"
         };
       }
-      constructor(config) {
-        super(config);
+      constructor(config2) {
+        super(config2);
       }
     };
     exports2.default = Config;
@@ -20082,16 +20082,16 @@ var require_session_credential = __commonJS({
     var config_1 = __importDefault(require_config());
     var credential_model_1 = __importDefault(require_credential_model());
     var SessionCredential = class extends default_credential_1.default {
-      constructor(config) {
+      constructor(config2) {
         const conf = new config_1.default({
-          type: config.type,
-          accessKeyId: config.accessKeyId,
-          accessKeySecret: config.accessKeySecret,
-          securityToken: config.securityToken
+          type: config2.type,
+          accessKeyId: config2.accessKeyId,
+          accessKeySecret: config2.accessKeySecret,
+          securityToken: config2.securityToken
         });
         super(conf);
         this.sessionCredential = null;
-        this.durationSeconds = config.durationSeconds || 3600;
+        this.durationSeconds = config2.durationSeconds || 3600;
       }
       async updateCredential() {
         throw new Error("need implemented in sub-class");
@@ -21860,18 +21860,18 @@ var require_profile = __commonJS({
         return credentials_1.default.builder().withAccessKeyId(credentials.accessKeyId).withAccessKeySecret(credentials.accessKeySecret).withSecurityToken(credentials.securityToken).withProviderName(`${this.getProviderName()}/${this.innerProvider.getProviderName()}`).build();
       }
       getCredentialsProvider(ini) {
-        const config = ini[this.profileName] || {};
-        if (!config.type) {
+        const config2 = ini[this.profileName] || {};
+        if (!config2.type) {
           throw new Error(`Can not find credential type for "${this.profileName}"`);
         }
-        switch (config.type) {
+        switch (config2.type) {
           case "access_key":
-            return static_ak_1.default.builder().withAccessKeyId(config.access_key_id).withAccessKeySecret(config.access_key_secret).build();
+            return static_ak_1.default.builder().withAccessKeyId(config2.access_key_id).withAccessKeySecret(config2.access_key_secret).build();
           case "ecs_ram_role":
-            return ecs_ram_role_1.default.builder().withRoleName(config.role_name).build();
+            return ecs_ram_role_1.default.builder().withRoleName(config2.role_name).build();
           case "ram_role_arn": {
-            const previous = static_ak_1.default.builder().withAccessKeyId(config.access_key_id).withAccessKeySecret(config.access_key_secret).build();
-            return ram_role_arn_1.default.builder().withCredentialsProvider(previous).withRoleArn(config.role_arn).withRoleSessionName(config.role_session_name).withPolicy(config.policy).build();
+            const previous = static_ak_1.default.builder().withAccessKeyId(config2.access_key_id).withAccessKeySecret(config2.access_key_secret).build();
+            return ram_role_arn_1.default.builder().withCredentialsProvider(previous).withRoleArn(config2.role_arn).withRoleSessionName(config2.role_session_name).withPolicy(config2.policy).build();
           }
           default:
             throw new Error("Invalid type option, support: access_key, ecs_ram_role, ram_role_arn");
@@ -22081,11 +22081,11 @@ var require_client = __commonJS({
       return typeof t.getCredentials === "function" && typeof t.getProviderName === "function";
     }
     var Credential2 = class {
-      constructor(config = null, provider = null) {
+      constructor(config2 = null, provider = null) {
         if (isCredentialsProviderClass(provider)) {
           this.load(null, provider);
         } else {
-          this.load(config, null);
+          this.load(config2, null);
         }
       }
       /**
@@ -22121,50 +22121,50 @@ var require_client = __commonJS({
       getCredential() {
         return this.credential.getCredential();
       }
-      load(config, provider) {
+      load(config2, provider) {
         if (provider) {
           this.credential = new InnerCredentialsClient(provider.getProviderName(), provider);
           return;
         }
-        if (!config) {
+        if (!config2) {
           this.credential = new InnerCredentialsClient("default", default_1.default.builder().build());
           return;
         }
-        if (!config.type) {
+        if (!config2.type) {
           throw new Error("Missing required type option");
         }
-        switch (config.type) {
+        switch (config2.type) {
           case "access_key":
-            this.credential = new InnerCredentialsClient("access_key", static_ak_1.default.builder().withAccessKeyId(config.accessKeyId).withAccessKeySecret(config.accessKeySecret).build());
+            this.credential = new InnerCredentialsClient("access_key", static_ak_1.default.builder().withAccessKeyId(config2.accessKeyId).withAccessKeySecret(config2.accessKeySecret).build());
             break;
           case "sts":
-            this.credential = new InnerCredentialsClient("sts", static_sts_1.default.builder().withAccessKeyId(config.accessKeyId).withAccessKeySecret(config.accessKeySecret).withSecurityToken(config.securityToken).build());
+            this.credential = new InnerCredentialsClient("sts", static_sts_1.default.builder().withAccessKeyId(config2.accessKeyId).withAccessKeySecret(config2.accessKeySecret).withSecurityToken(config2.securityToken).build());
             break;
           case "ecs_ram_role":
-            this.credential = new InnerCredentialsClient("ecs_ram_role", ecs_ram_role_1.default.builder().withRoleName(config.roleName).withDisableIMDSv1(config.disableIMDSv1).withAsyncCredentialUpdateEnabled(config.asyncCredentialUpdateEnabled).withReadTimeout(config.timeout).withConnectTimeout(config.connectTimeout).build());
+            this.credential = new InnerCredentialsClient("ecs_ram_role", ecs_ram_role_1.default.builder().withRoleName(config2.roleName).withDisableIMDSv1(config2.disableIMDSv1).withAsyncCredentialUpdateEnabled(config2.asyncCredentialUpdateEnabled).withReadTimeout(config2.timeout).withConnectTimeout(config2.connectTimeout).build());
             break;
           case "ram_role_arn":
             {
               let credentialsProvider;
-              if (config.securityToken) {
-                credentialsProvider = static_sts_1.default.builder().withAccessKeyId(config.accessKeyId).withAccessKeySecret(config.accessKeySecret).withSecurityToken(config.securityToken).build();
+              if (config2.securityToken) {
+                credentialsProvider = static_sts_1.default.builder().withAccessKeyId(config2.accessKeyId).withAccessKeySecret(config2.accessKeySecret).withSecurityToken(config2.securityToken).build();
               } else {
-                credentialsProvider = static_ak_1.default.builder().withAccessKeyId(config.accessKeyId).withAccessKeySecret(config.accessKeySecret).build();
+                credentialsProvider = static_ak_1.default.builder().withAccessKeyId(config2.accessKeyId).withAccessKeySecret(config2.accessKeySecret).build();
               }
-              this.credential = new InnerCredentialsClient("ram_role_arn", ram_role_arn_1.default.builder().withCredentialsProvider(credentialsProvider).withRoleArn(config.roleArn).withPolicy(config.policy).withDurationSeconds(config.roleSessionExpiration).withRoleSessionName(config.roleSessionName).withReadTimeout(config.timeout).withConnectTimeout(config.connectTimeout).withEnableVpc(config.enableVpc).withStsEndpoint(config.stsEndpoint).withStsRegionId(config.stsRegionId).withExternalId(config.externalId).build());
+              this.credential = new InnerCredentialsClient("ram_role_arn", ram_role_arn_1.default.builder().withCredentialsProvider(credentialsProvider).withRoleArn(config2.roleArn).withPolicy(config2.policy).withDurationSeconds(config2.roleSessionExpiration).withRoleSessionName(config2.roleSessionName).withReadTimeout(config2.timeout).withConnectTimeout(config2.connectTimeout).withEnableVpc(config2.enableVpc).withStsEndpoint(config2.stsEndpoint).withStsRegionId(config2.stsRegionId).withExternalId(config2.externalId).build());
             }
             break;
           case "oidc_role_arn":
-            this.credential = new InnerCredentialsClient("oidc_role_arn", oidc_role_arn_1.default.builder().withRoleArn(config.roleArn).withOIDCProviderArn(config.oidcProviderArn).withOIDCTokenFilePath(config.oidcTokenFilePath).withRoleSessionName(config.roleSessionName).withPolicy(config.policy).withDurationSeconds(config.roleSessionExpiration).withStsEndpoint(config.stsEndpoint).withStsRegionId(config.stsRegionId).withEnableVpc(config.enableVpc).withReadTimeout(config.timeout).withConnectTimeout(config.connectTimeout).build());
+            this.credential = new InnerCredentialsClient("oidc_role_arn", oidc_role_arn_1.default.builder().withRoleArn(config2.roleArn).withOIDCProviderArn(config2.oidcProviderArn).withOIDCTokenFilePath(config2.oidcTokenFilePath).withRoleSessionName(config2.roleSessionName).withPolicy(config2.policy).withDurationSeconds(config2.roleSessionExpiration).withStsEndpoint(config2.stsEndpoint).withStsRegionId(config2.stsRegionId).withEnableVpc(config2.enableVpc).withReadTimeout(config2.timeout).withConnectTimeout(config2.connectTimeout).build());
             break;
           case "rsa_key_pair":
-            this.credential = new rsa_key_pair_credential_1.default(config.publicKeyId, config.privateKeyFile);
+            this.credential = new rsa_key_pair_credential_1.default(config2.publicKeyId, config2.privateKeyFile);
             break;
           case "bearer":
-            this.credential = new bearer_token_credential_1.default(config.bearerToken);
+            this.credential = new bearer_token_credential_1.default(config2.bearerToken);
             break;
           case "credentials_uri":
-            this.credential = new InnerCredentialsClient("credentials_uri", uri_1.default.builder().withCredentialsURI(config.credentialsURI).withReadTimeout(config.timeout).withConnectTimeout(config.connectTimeout).build());
+            this.credential = new InnerCredentialsClient("credentials_uri", uri_1.default.builder().withCredentialsURI(config2.credentialsURI).withReadTimeout(config2.timeout).withConnectTimeout(config2.connectTimeout).build());
             break;
           default:
             throw new Error("Invalid type option, support: access_key, sts, ecs_ram_role, ram_role_arn, rsa_key_pair, credentials_uri");
@@ -23403,60 +23403,60 @@ var require_client3 = __commonJS({
        *
        * @param config - config contains the necessary information to create a client
        */
-      constructor(config) {
-        if ($dara2.isNull(config)) {
+      constructor(config2) {
+        if ($dara2.isNull(config2)) {
           throw new $_error.ClientError({
             code: "ParameterMissing",
             message: "'config' can not be unset"
           });
         }
-        if (!$dara2.isNull(config.accessKeyId) && config.accessKeyId != "" && (!$dara2.isNull(config.accessKeySecret) && config.accessKeySecret != "")) {
-          if (!$dara2.isNull(config.securityToken) && config.securityToken != "") {
-            config.type = "sts";
+        if (!$dara2.isNull(config2.accessKeyId) && config2.accessKeyId != "" && (!$dara2.isNull(config2.accessKeySecret) && config2.accessKeySecret != "")) {
+          if (!$dara2.isNull(config2.securityToken) && config2.securityToken != "") {
+            config2.type = "sts";
           } else {
-            config.type = "access_key";
+            config2.type = "access_key";
           }
           let credentialConfig = new $Credential.Config({
-            accessKeyId: config.accessKeyId,
-            type: config.type,
-            accessKeySecret: config.accessKeySecret
+            accessKeyId: config2.accessKeyId,
+            type: config2.type,
+            accessKeySecret: config2.accessKeySecret
           });
-          credentialConfig.securityToken = config.securityToken;
+          credentialConfig.securityToken = config2.securityToken;
           this._credential = new credentials_1.default(credentialConfig);
-        } else if (!$dara2.isNull(config.bearerToken) && config.bearerToken != "") {
+        } else if (!$dara2.isNull(config2.bearerToken) && config2.bearerToken != "") {
           let cc = new $Credential.Config({
             type: "bearer",
-            bearerToken: config.bearerToken
+            bearerToken: config2.bearerToken
           });
           this._credential = new credentials_1.default(cc);
-        } else if (!$dara2.isNull(config.credential)) {
-          this._credential = config.credential;
+        } else if (!$dara2.isNull(config2.credential)) {
+          this._credential = config2.credential;
         }
-        this._endpoint = config.endpoint;
-        this._endpointType = config.endpointType;
-        this._network = config.network;
-        this._suffix = config.suffix;
-        this._protocol = config.protocol;
-        this._method = config.method;
-        this._regionId = config.regionId;
-        this._userAgent = config.userAgent;
-        this._readTimeout = config.readTimeout;
-        this._connectTimeout = config.connectTimeout;
-        this._httpProxy = config.httpProxy;
-        this._httpsProxy = config.httpsProxy;
-        this._noProxy = config.noProxy;
-        this._socks5Proxy = config.socks5Proxy;
-        this._socks5NetWork = config.socks5NetWork;
-        this._maxIdleConns = config.maxIdleConns;
-        this._signatureVersion = config.signatureVersion;
-        this._signatureAlgorithm = config.signatureAlgorithm;
-        this._globalParameters = config.globalParameters;
-        this._key = config.key;
-        this._cert = config.cert;
-        this._ca = config.ca;
-        this._disableHttp2 = config.disableHttp2;
-        this._retryOptions = config.retryOptions;
-        this._tlsMinVersion = config.tlsMinVersion;
+        this._endpoint = config2.endpoint;
+        this._endpointType = config2.endpointType;
+        this._network = config2.network;
+        this._suffix = config2.suffix;
+        this._protocol = config2.protocol;
+        this._method = config2.method;
+        this._regionId = config2.regionId;
+        this._userAgent = config2.userAgent;
+        this._readTimeout = config2.readTimeout;
+        this._connectTimeout = config2.connectTimeout;
+        this._httpProxy = config2.httpProxy;
+        this._httpsProxy = config2.httpsProxy;
+        this._noProxy = config2.noProxy;
+        this._socks5Proxy = config2.socks5Proxy;
+        this._socks5NetWork = config2.socks5NetWork;
+        this._maxIdleConns = config2.maxIdleConns;
+        this._signatureVersion = config2.signatureVersion;
+        this._signatureAlgorithm = config2.signatureAlgorithm;
+        this._globalParameters = config2.globalParameters;
+        this._key = config2.key;
+        this._cert = config2.cert;
+        this._ca = config2.ca;
+        this._disableHttp2 = config2.disableHttp2;
+        this._retryOptions = config2.retryOptions;
+        this._tlsMinVersion = config2.tlsMinVersion;
       }
       /**
        * @remarks
@@ -24740,8 +24740,8 @@ var require_client3 = __commonJS({
        *
        * @param config - config contains the necessary information to create a client
        */
-      checkConfig(config) {
-        if ($dara2.isNull(this._endpointRule) && $dara2.isNull(config.endpoint)) {
+      checkConfig(config2) {
+        if ($dara2.isNull(this._endpointRule) && $dara2.isNull(config2.endpoint)) {
           throw new $_error.ClientError({
             code: "ParameterMissing",
             message: "'config.endpoint' can not be empty"
@@ -31669,8 +31669,8 @@ var require_client4 = __commonJS({
     var $_model = __importStar(require_model2());
     __exportStar(require_model2(), exports2);
     var Client2 = class extends openapi_core_1.default {
-      constructor(config) {
-        super(config);
+      constructor(config2) {
+        super(config2);
         this._signatureAlgorithm = "v2";
         this._endpointRule = "regional";
         this._endpointMap = {
@@ -31729,7 +31729,7 @@ var require_client4 = __commonJS({
           "us-east-1": "mt.aliyuncs.com",
           "us-west-1": "mt.aliyuncs.com"
         };
-        this.checkConfig(config);
+        this.checkConfig(config2);
         this._endpoint = this.getEndpoint("alimt", this._regionId, this._endpointRule, this._network, this._suffix, this._endpointMap, this._endpoint);
       }
       async _postOSSObject(bucketName, form) {
@@ -33198,7 +33198,7 @@ __export(extension_exports, {
   deactivate: () => deactivate
 });
 module.exports = __toCommonJS(extension_exports);
-var vscode4 = __toESM(require("vscode"));
+var vscode7 = __toESM(require("vscode"));
 
 // src/translate-provider/providers/ali.ts
 var $dara = __toESM(require_dist());
@@ -33238,7 +33238,7 @@ var accessKeyIdStoreKey = "accessKeyId";
 var accessKeySecretStoreKey = "accessKeySecret";
 var Client = class {
   constructor() {
-    this.id = "alicloud-translate";
+    this.id = "alicloud.translate";
     this.name = "\u963F\u91CC\u4E91\u7FFB\u8BD1";
   }
   storeKey(key) {
@@ -33257,11 +33257,11 @@ var Client = class {
       accessKeyId: await this.context.secrets.get(this.storeKey(accessKeyIdStoreKey)),
       accessKeySecret: await this.context.secrets.get(this.storeKey(accessKeySecretStoreKey))
     });
-    let config = new import_openapi_core.$OpenApiUtil.Config({
+    let config2 = new import_openapi_core.$OpenApiUtil.Config({
       credential
     });
-    config.endpoint = `mt.cn-hangzhou.aliyuncs.com`;
-    return new $alimt.default(config);
+    config2.endpoint = `mt.cn-hangzhou.aliyuncs.com`;
+    return new $alimt.default(config2);
   }
   async translate(context) {
     let client = await this.createClient();
@@ -33296,6 +33296,70 @@ var Client = class {
   }
 };
 RegisterTranslateProvider(Client);
+
+// src/command/config.ts
+var vscode5 = __toESM(require("vscode"));
+
+// src/status-bar.ts
+var vscode3 = __toESM(require("vscode"));
+
+// src/constants.ts
+var configurationKey = "transform-case";
+
+// src/status-bar.ts
+var statusBar;
+var initStatusBar = () => {
+  statusBar = vscode3.window.createStatusBarItem(vscode3.StatusBarAlignment.Right, 99);
+  statusBar.command = "transform-case.translateConfig" /* transformCaseTranslateConfig */;
+  statusBar.tooltip = "Transfrom Case translation configuration";
+  let configuration = vscode3.workspace.getConfiguration(configurationKey);
+  let current = configuration.get("current");
+  statusBar.text = ["$(wrench)", current ? current : "Configuration required"].join(" ");
+  statusBar.show();
+  return statusBar;
+};
+var updateStatusBar = async (data) => {
+  statusBar.text = data.text;
+};
+
+// src/utils.ts
+var vscode4 = __toESM(require("vscode"));
+var getConfig = (key) => {
+  return vscode4.workspace.getConfiguration(configurationKey).get(key);
+};
+var setConfig = async (key, data) => {
+  await vscode4.workspace.getConfiguration(configurationKey).update(key, data, true);
+};
+
+// src/command/config.ts
+var config = async () => {
+  let current = getConfig("current");
+  let providerOptions = Array.from(
+    TranslateProviders.values()
+  ).map((p) => ({
+    id: p.id,
+    label: [
+      current === p.id ? "$(pass-filled)" : "$(circle-large-outline)",
+      p.name
+    ].join(" ")
+  }));
+  const selectedOption = await vscode5.window.showQuickPick(providerOptions, {
+    title: "Choose a provider",
+    placeHolder: "Please select an option...",
+    ignoreFocusOut: true
+  });
+  if (selectedOption) {
+    let provider = GetTranslateProvider(selectedOption.id);
+    let configured = await provider?.config?.();
+    if (configured) {
+      await setConfig("current", provider.id);
+      updateStatusBar({
+        text: provider.name
+      });
+    }
+    vscode5.window.showInformationMessage(`(${provider?.name})` + (configured ? "configured" : "canceled"));
+  }
+};
 
 // node_modules/change-case/dist/index.js
 var dist_exports = {};
@@ -33451,16 +33515,16 @@ function splitPrefixSuffix(input, options = {}) {
 }
 
 // src/command/transform.ts
-var vscode3 = __toESM(require("vscode"));
+var vscode6 = __toESM(require("vscode"));
 var transfromCase = async (translate) => {
-  const editor = vscode3.window.activeTextEditor;
+  const editor = vscode6.window.activeTextEditor;
   if (editor) {
     const document2 = editor.document;
     const selections = editor.selections;
     const previewSelection = selections[0];
     const moreSelection = selections.length - 1;
     if (!previewSelection.isEmpty) {
-      const quickPick = vscode3.window.createQuickPick();
+      const quickPick = vscode6.window.createQuickPick();
       let text = document2.getText(previewSelection);
       let translator = GetTranslateProvider();
       if (translate) {
@@ -33517,26 +33581,10 @@ var transfromCase = async (translate) => {
 function activate(context) {
   InitProvidersContext(context);
   context.subscriptions.push(
-    vscode4.commands.registerCommand("transform-case.transform", () => transfromCase()),
-    vscode4.commands.registerCommand("transform-case.transformWithTranslate", () => transfromCase(true)),
-    vscode4.commands.registerCommand("transform-case.translateConfig", async () => {
-      let providerOptions = Array.from(
-        TranslateProviders.values()
-      ).map((p) => ({
-        id: p.id,
-        label: "$(circle-large-outline) " + p.name
-      }));
-      const selectedOption = await vscode4.window.showQuickPick(providerOptions, {
-        title: "Choose a provider",
-        placeHolder: "Please select an option...",
-        ignoreFocusOut: true
-      });
-      if (selectedOption) {
-        if (await GetTranslateProvider(selectedOption.id)?.config?.()) {
-          vscode4.window.show;
-        }
-      }
-    })
+    initStatusBar(),
+    vscode7.commands.registerCommand("transform-case.transform" /* transformCaseTransform */, () => transfromCase()),
+    vscode7.commands.registerCommand("transform-case.transformWithTranslate" /* transformCaseTransformWithTranslate */, () => transfromCase(true)),
+    vscode7.commands.registerCommand("transform-case.translateConfig" /* transformCaseTranslateConfig */, () => config())
   );
 }
 function deactivate() {

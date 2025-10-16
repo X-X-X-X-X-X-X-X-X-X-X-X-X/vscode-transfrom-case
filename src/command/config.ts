@@ -1,0 +1,33 @@
+import * as vscode from 'vscode';
+import { updateStatusBar } from "../status-bar";
+import { GetTranslateProvider, TranslateProviders } from "../translate-provider/provider";
+import { getConfig, setConfig } from "../utils";
+
+export const config = async () => {
+    let current = getConfig("current")
+    let providerOptions = Array.from(
+        TranslateProviders.values()
+    ).map(p => ({
+        id: p.id,
+        label: [
+            current === p.id ? "$(pass-filled)" : "$(circle-large-outline)",
+            p.name
+        ].join(" ")
+    }))
+    const selectedOption = await vscode.window.showQuickPick(providerOptions, {
+        title: 'Choose a provider',
+        placeHolder: 'Please select an option...',
+        ignoreFocusOut: true,
+    });
+    if (selectedOption) {
+        let provider = GetTranslateProvider(selectedOption.id)
+        let configured = await provider?.config?.()
+        if (configured) {
+            await setConfig("current", provider!.id)
+            updateStatusBar({
+                text: provider!.name
+            })
+        }
+        vscode.window.showInformationMessage(`(${provider?.name})` + (configured ? "configured" : "canceled"))
+    }
+}

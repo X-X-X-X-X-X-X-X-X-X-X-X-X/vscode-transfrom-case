@@ -18,6 +18,16 @@
     "url": "https://github.com/X-X-X-X-X-X-X-X-X-X-X-X-X/vscode-transfrom-case.git"
   },
   "contributes": {
+    "configuration": {
+      "title": "Transform Case Settings",
+      "properties": {
+        "transform-case.current": {
+          "type": "string",
+          "description": "Translation services currently in use(Do not change the values manually)",
+          "readonly": true
+        }
+      }
+    },
     "commands": [
       {
         "command": "transform-case.transform",

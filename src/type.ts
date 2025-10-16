@@ -13,3 +13,9 @@ export interface TranslateProvider {
 
     config?(): Promise<void | boolean>
 }
+
+export type ExtConfig = {
+    current?: string
+}
+
+export type ExtConfigKeys = keyof ExtConfig;

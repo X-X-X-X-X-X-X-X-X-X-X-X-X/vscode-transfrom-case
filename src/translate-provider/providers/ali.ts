@@ -10,7 +10,7 @@ const accessKeyIdStoreKey = "accessKeyId"
 const accessKeySecretStoreKey = "accessKeySecret"
 
 class Client implements TranslateProvider {
-    id: string = "alicloud-translate";
+    id: string = "alicloud.translate";
     name: string = "阿里云翻译";
     context!: vscode.ExtensionContext;
     private storeKey(key: string) {
