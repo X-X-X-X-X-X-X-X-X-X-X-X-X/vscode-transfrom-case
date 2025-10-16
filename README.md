@@ -6,6 +6,11 @@ Translate and convert to other text formats.
 
 Converted using the [change-case](https://www.npmjs.com/package/change-case) library.
 
+## Already have services
+
+* 阿里云翻译
+* 百度翻译(slug api,仅支持简单单词翻译)
+
 ## Preview
 
 ### Transform Case
