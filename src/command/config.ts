@@ -24,6 +24,9 @@ export const config = async () => {
         let configured = await provider?.config?.()
         if (configured) {
             await setConfig("current", provider!.id)
+            provider?.sourceLanguage && await setConfig("sourceLanguage", provider.sourceLanguage)
+            provider?.targetLanguage && await setConfig("sourceLanguage", provider.targetLanguage)
+
             updateStatusBar({
                 text: provider!.name
             })
