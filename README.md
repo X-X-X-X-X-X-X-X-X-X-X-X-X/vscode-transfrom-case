@@ -8,7 +8,8 @@ Converted using the [change-case](https://www.npmjs.com/package/change-case) lib
 
 ## Already have services
 
-* 阿里云翻译
+* 阿里云翻译通用版
+* 阿里云翻译专业版
 * 百度翻译(slug api,仅支持简单单词翻译)
 
 ## Preview

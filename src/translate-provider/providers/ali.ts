@@ -9,13 +9,17 @@ import * as vscode from 'vscode';
 const accessKeyIdStoreKey = "accessKeyId"
 const accessKeySecretStoreKey = "accessKeySecret"
 
-class Client implements TranslateProvider {
+export class AliClient implements TranslateProvider {
     id: string = "alicloud.translate";
-    name: string = "阿里云翻译";
+    name: string = "阿里云机器翻译(通用版)";
+    detail?: string | undefined = "每月免费额度一百万字符";
     context!: vscode.ExtensionContext;
     private storeKey(key: string) {
         return this.id + "-" + key;
     }
+
+    mode: "general" | "pro" = "general"
+
     /**
      * @remarks
      * 使用凭据初始化账号Client
@@ -50,7 +54,13 @@ class Client implements TranslateProvider {
             scene: "general",
         });
         let runtime = new $dara.RuntimeOptions({});
-        let resp = await client.translateGeneralWithOptions(translateGeneralRequest, runtime);
+
+        let resp: $alimt.TranslateGeneralResponse | $alimt.TranslateResponse;
+        if (this.mode === "general") {
+            resp = await client.translateGeneralWithOptions(translateGeneralRequest, runtime);
+        } else {
+            resp = await client.translateWithOptions(translateGeneralRequest, runtime);
+        }
         if (resp.body?.code !== 200) {
             throw new Error(resp.body?.message || JSON.stringify(resp.body))
         }
@@ -77,4 +87,4 @@ class Client implements TranslateProvider {
     }
 }
 
-RegisterTranslateProvider(Client)
+RegisterTranslateProvider(AliClient)

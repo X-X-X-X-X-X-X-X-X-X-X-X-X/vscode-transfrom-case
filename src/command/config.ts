@@ -13,7 +13,8 @@ export const config = async () => {
             current === p.id ? "$(pass-filled)" : "$(circle-large-outline)",
             p.name
         ].join(" "),
-        detail: p.description || "",
+        description: p.description || "",
+        detail: p.detail || "",
     })) as (vscode.QuickPickItem & { id: string })[]
     const selectedOption = await vscode.window.showQuickPick(providerOptions, {
         title: 'Choose a provider',
