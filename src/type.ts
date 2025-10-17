@@ -9,6 +9,8 @@ export interface TranslateProvider {
     sourceLanguage?: string
     targetLanguage?: string
 
+    disable?: boolean
+
     context?: vscode.ExtensionContext
 
     translate(context: {

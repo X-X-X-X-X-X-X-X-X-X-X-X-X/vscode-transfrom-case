@@ -7,7 +7,10 @@ class BaiduFree implements TranslateProvider {
     sourceLanguage?: string | undefined;
     targetLanguage?: string | undefined;
     context?: ExtensionContext | undefined;
-    detail?: string | undefined = "免费slug api，只能识别简单单词";
+    description?: string | undefined = "免费slug api，只能识别简单单词";
+
+    disable?: boolean | undefined = true;
+
     async translate(context: { sourceLanguage?: string; targetLanguage?: string; sourceText: string; }): Promise<string> {
         let req = await fetch("https://fanyi.baidu.com/sug", {
             method: "POST",

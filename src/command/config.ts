@@ -1,13 +1,13 @@
 import * as vscode from 'vscode';
-import { updateStatusBar } from "../status-bar";
 import { GetTranslateProvider, TranslateProviders } from "../translate-provider/provider";
 import { getConfig, setConfig } from "../utils";
+import { configBar } from '../status-bars/config-bar';
 
 export const config = async () => {
     let current = getConfig("current")
     let providerOptions = Array.from(
         TranslateProviders.values()
-    ).map(p => ({
+    ).filter(v => !v.disable).map(p => ({
         id: p.id,
         label: [
             current === p.id ? "$(pass-filled)" : "$(circle-large-outline)",
@@ -27,9 +27,8 @@ export const config = async () => {
         if (configured) {
             await setConfig("current", provider!.id)
             provider?.sourceLanguage && await setConfig("sourceLanguage", provider.sourceLanguage)
-            provider?.targetLanguage && await setConfig("sourceLanguage", provider.targetLanguage)
-
-            updateStatusBar({
+            provider?.targetLanguage && await setConfig("targetLanguage", provider.targetLanguage)
+            configBar.update({
                 text: provider!.name
             })
             await provider?.translate({

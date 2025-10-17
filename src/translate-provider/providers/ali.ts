@@ -12,7 +12,7 @@ const accessKeySecretStoreKey = "accessKeySecret"
 export class AliClient implements TranslateProvider {
     id: string = "alicloud.translate";
     name: string = "阿里云机器翻译(通用版)";
-    detail?: string | undefined = "每月免费额度一百万字符";
+    description?: string | undefined = "每月免费额度一百万字符";
     context!: vscode.ExtensionContext;
     private storeKey(key: string) {
         return this.id + "-" + key;

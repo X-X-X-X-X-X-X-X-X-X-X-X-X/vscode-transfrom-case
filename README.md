@@ -10,7 +10,8 @@ Converted using the [change-case](https://www.npmjs.com/package/change-case) lib
 
 * 阿里云翻译通用版
 * 阿里云翻译专业版
-* 百度翻译(slug api,仅支持简单单词翻译)
+* ~~百度翻译(slug api,仅支持简单单词翻译)~~
+* [MyMemory](https://mymemory.translated.net)免费翻译
 
 ## Preview
 
