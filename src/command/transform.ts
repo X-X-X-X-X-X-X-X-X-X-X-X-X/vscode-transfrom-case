@@ -1,7 +1,6 @@
 import * as changeCase from 'change-case';
 import * as vscode from 'vscode';
 import { GetTranslateProvider } from '../translate-provider/provider';
-import "../auto-loaded-effects"
 import { getConfig } from '../utils';
 import { extCommands } from './constants';
 
