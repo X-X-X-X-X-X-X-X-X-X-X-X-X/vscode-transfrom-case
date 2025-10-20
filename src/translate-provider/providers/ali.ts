@@ -14,6 +14,9 @@ export class AliClient implements TranslateProvider {
     name: string = "阿里云机器翻译(通用版)";
     description?: string | undefined = "每月免费额度一百万字符";
     context!: vscode.ExtensionContext;
+
+    sourceLanguage?: string | undefined = "auto";
+    targetLanguage?: string | undefined = "en";
     private storeKey(key: string) {
         return this.id + "-" + key;
     }
