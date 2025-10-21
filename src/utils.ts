@@ -11,6 +11,7 @@ export const setConfig = async <K extends ExtConfigKeys>(key: K, data: ExtConfig
     await vscode.workspace.getConfiguration(configurationKey).update(key, data, true)
 }
 
+
 export const configListen = () => {
     return vscode.workspace.onDidChangeConfiguration(ev => {
         if (ev.affectsConfiguration(configurationKey)) {

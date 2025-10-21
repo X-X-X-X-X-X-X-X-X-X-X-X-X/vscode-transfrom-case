@@ -24,8 +24,8 @@ export interface TranslateProvider {
 
 export type ExtConfig = {
     current?: string,
-    sourceLanguage: string
-    targetLanguage: string
+    sourceLanguage?: string
+    targetLanguage?: string
 }
 
 export type ExtConfigKeys = keyof ExtConfig;

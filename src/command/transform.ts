@@ -40,7 +40,7 @@ export const transfromCase = async (translate?: boolean) => {
             quickPick.items = Object.keys(translateFns).map(k => {
                 return {
                     //@ts-ignore
-                    label: translateFns[k](text) + ` ← ${k}`,
+                    label: translateFns[k](text) + ` $(arrow-left) ${k}`,
                     description: `${moreSelection > 0 ? `${moreSelection}+` : ""}`
                 } as vscode.QuickPickItem
             })
