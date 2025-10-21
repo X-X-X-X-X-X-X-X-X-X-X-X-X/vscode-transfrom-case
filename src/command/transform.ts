@@ -4,6 +4,19 @@ import { GetTranslateProvider } from '../translate-provider/provider';
 import { getConfig } from '../utils';
 import { extCommands } from './constants';
 
+
+const translateFns: {
+    [k: string]: (s: string) => string
+} = {
+    original: s => s
+}
+
+Object.keys(changeCase).forEach(k => {
+    if (k.endsWith("Case")) {
+        translateFns[k] = s => changeCase[k](s)
+    }
+})
+
 export const transfromCase = async (translate?: boolean) => {
     const editor = vscode.window.activeTextEditor;
     if (editor) {
@@ -24,10 +37,10 @@ export const transfromCase = async (translate?: boolean) => {
                     sourceText: text
                 })!
             }
-            quickPick.items = Object.keys(changeCase).filter(k => k.endsWith("Case")).map(k => {
+            quickPick.items = Object.keys(translateFns).map(k => {
                 return {
                     //@ts-ignore
-                    label: changeCase[k](text) + ` ← ${k}`,
+                    label: translateFns[k](text) + ` ← ${k}`,
                     description: `${moreSelection > 0 ? `${moreSelection}+` : ""}`
                 } as vscode.QuickPickItem
             })
@@ -57,7 +70,7 @@ export const transfromCase = async (translate?: boolean) => {
                 editor.edit(edit => {
                     Array.from(replace.entries()).forEach(([s, text]) => {
                         //@ts-ignore
-                        edit.replace(s, changeCase[method](text))
+                        edit.replace(s, translateFns[method](text))
                     })
                 })
             });
